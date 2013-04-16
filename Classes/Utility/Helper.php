@@ -38,11 +38,16 @@ final class Tx_Restdoc_Utility_Helper {
 	/**
 	 * Returns Sphinx-related metadata.
 	 *
-	 * @param string $path
+	 * @param string $path Absolute path to the documentation
 	 * @return array
 	 */
 	public static function getMetadata($path) {
-		$documentRoot = PATH_site . rtrim($path, '/') . '/';
+		if (!is_dir($path)) {
+			// Most probably a relative path has been provided
+			$path = PATH_site . $path;
+			t3lib_div::deprecationLog('EXT:restdoc - Tx_Restdoc_Utility_Helper::getMetadata() needs an absolute path as argument since 1.3.0. Support for relative path will be removed in 1.5.0.');
+		}
+		$documentRoot = rtrim($path, '/') . '/';
 		$jsonFile = 'globalcontext.json';
 
 		$data = array();

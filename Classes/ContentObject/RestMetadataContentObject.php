@@ -51,8 +51,10 @@ class Tx_Restdoc_ContentObject_RestMetadataContentObject {
 		$this->cObj = $pObj;
 		$this->applyStdWrap($conf, 'path');
 
+		// TODO: Add support for FAL
+
 		$output = '';
-		$data = Tx_Restdoc_Utility_Helper::getMetadata($conf['path']);
+		$data = Tx_Restdoc_Utility_Helper::getMetadata(PATH_site . $conf['path']);
 		if ($data) {
 			/** @var $contentObj tslib_cObj */
 			$contentObj = t3lib_div::makeInstance('tslib_cObj');

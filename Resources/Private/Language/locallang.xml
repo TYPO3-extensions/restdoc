@@ -17,6 +17,7 @@
 			<label index="quicknavigation_index">index</label>
 			<label index="search_placeholder">search</label>
 			<label index="search_action">search</label>
+			<label index="home_title">Home</label>
 			<label index="index_title">Index</label>
 		</languageKey>
 	</data>

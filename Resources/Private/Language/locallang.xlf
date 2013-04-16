@@ -36,6 +36,9 @@
 			<trans-unit id="search_action">
 				<source>search</source>
 			</trans-unit>
+			<trans-unit id="home_title">
+				<source>Home</source>
+			</trans-unit>
 			<trans-unit id="index_title">
 				<source>Index</source>
 			</trans-unit>

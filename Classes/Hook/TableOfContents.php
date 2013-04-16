@@ -74,9 +74,16 @@ class Tx_Restdoc_Hook_TableOfContents {
 			return;
 		}
 
+		if (version_compare(TYPO3_version, '6.0.0', '>=')) {
+			$storageConfiguration = $this->pObj->getSphinxReader()->getStorage()->getConfiguration();
+			$basePath = rtrim($storageConfiguration['basePath'], '/') . '/';
+		} else {
+			$basePath = PATH_site;
+		}
+
 		$this->maxDocuments = t3lib_utility_Math::forceIntegerInRange($params['config']['documentStructureMaxDocuments'], 1, 9999);
 		$this->pageId = intval($this->pObj->cObj->data['pid']);
-		$this->root = substr($params['documentRoot'], strlen(PATH_site));
+		$this->root = substr($params['documentRoot'], strlen($basePath));
 		$this->flushCache();
 
 		$this->extractLinks($params);
