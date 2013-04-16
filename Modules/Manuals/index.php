@@ -37,8 +37,6 @@ $GLOBALS['BE_USER']->modAccess($MCONF, 1);		// This checks permissions and exits
  */
 class Tx_Restdoc_Modules_Manuals extends t3lib_SCbase {
 
-	public $pageinfo;
-
 	/**
 	 * Initialisation of this backend module
 	 *
@@ -55,10 +53,70 @@ class Tx_Restdoc_Modules_Manuals extends t3lib_SCbase {
 	 * @return void
 	 */
 	public function main() {
+		//$this->content = $this->getSampleTransformation();
+
+		$documentationPath = t3lib_extMgm::extPath('your-ext') . 'Documentation/build/json/';
+
+		/** @var Tx_Restdoc_Reader_SphinxJson $sphinxReader */
+		$sphinxReader = t3lib_div::makeInstance('Tx_Restdoc_Reader_SphinxJson');
+		$sphinxReader->setPath($documentationPath);
+
+		$document = t3lib_div::_GET('doc');
+		if (empty($document)) {
+			$document = 'index/';
+		}
+
+		$sphinxReader->setDocument($document);
+		$sphinxReader->load();
+		$this->content = $sphinxReader->getBody(
+			array($this, 'getLink'),
+			array($this, 'processImage')
+		);
+	}
+
+	/**
+	 * Generates a link to navigate within a reST documentation project.
+	 *
+	 * @param string $document Target document
+	 * @param boolean $absolute Whether absolute URI should be generated
+	 * @param integer $rootPage UID of the page showing the documentation
+	 * @return string
+	 * @private This method is made public to be accessible from a lambda-function scope
+	 */
+	public function getLink($document, $absolute = FALSE, $rootPage = 0) {
+		$anchor = '';
+		if (($pos = strrpos($document, '#')) !== FALSE) {
+			$anchor = substr($document, $pos + 1);
+			$document = substr($document, 0, $pos);
+		}
+		$link = '/typo3/mod.php?M=help_restdocManuals&amp;doc=' . urlencode($document);
+		if ($anchor) {
+			$link .= '#' . $anchor;
+		}
+		return $link;
+	}
+
+	/**
+	 * Processes an image.
+	 *
+	 * @param array $data
+	 * @return string
+	 * @private This method is made public to be accessible from a lambda-function scope
+	 */
+	public function processImage(array $data) {
+		return '<img src="../' . $data['src'] . '" alt="' . htmlspecialchars($data['alt']) . '" class="' . $data['class'] . '" />';
+	}
+
+	/**
+	 * Returns a sample ReStructuredText transformation in HTML.
+	 *
+	 * @return string
+	 */
+	protected function getSampleTransformation() {
 		/** @var $restParser Tx_Restdoc_Utility_RestParser */
 		$restParser = t3lib_div::makeInstance('Tx_Restdoc_Utility_RestParser');
 
-		$this->content = $restParser->transform(<<<REST
+		$content = $restParser->transform(<<<REST
 =============
 Title level 1
 =============
@@ -94,6 +152,8 @@ Show an image:
 
 REST
 		);
+
+		return $content;
 	}
 
 	/**
