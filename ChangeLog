@@ -1,3 +1,23 @@
+2013-04-14  Xavier Perseguers  <xavier@causal.ch>
+
+	* [TASK][DOC] Polish some explanations
+
+2013-04-11  Xavier Perseguers  <xavier@causal.ch>
+
+	* [TASK] #46903: Add support for directory not relative to PATH_site
+	* [BUGFIX] Home title is hardcoded in quick navigation
+
+2013-04-11  Xavier Perseguers  <xavier@causal.ch>
+
+	* [TASK] Raise version to 1.2.1
+	* [TASK][DOC] Describe available hooks
+	* [TASK][DOC] Add link to the release notes
+
+2013-04-09  Xavier Perseguers  <xavier@causal.ch>
+
+	* [BUGFIX] #47074: Search does not work with Sphinx 1.2b1
+	* [BUGFIX] #47077: Invalid index definition for tx_restdoc_toc
+
 2013-04-04  Xavier Perseguers  <xavier@causal.ch>
 
 	* [BUGFIX] Possible NULL pointer exception if invalid TOC is retrieved

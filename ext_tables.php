@@ -24,7 +24,7 @@ t3lib_extMgm::addStaticFile($GLOBALS['_EXTKEY'], 'Configuration/TypoScript/', 'r
 if (TYPO3_MODE === 'BE') {
 	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_' . $_EXTKEY . '_pi1_wizicon'] = t3lib_extMgm::extPath($_EXTKEY) . 'Classes/Controller/Pi1/class.tx_restdoc_pi1_wizicon.php';
 
-	t3lib_extMgm::addModule('help', 'restdocManuals', '', t3lib_extMgm::extPath($_EXTKEY) . 'Modules/Manuals/');
+	t3lib_extMgm::addModule('help', 'restdocManuals', 'top', t3lib_extMgm::extPath($_EXTKEY) . 'Modules/Manuals/');
 }
 
 ?>

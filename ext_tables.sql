@@ -10,7 +10,5 @@ CREATE TABLE tx_restdoc_toc (
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
 	lastmod varchar(255) DEFAULT '' NOT NULL,
-	url varchar(2048) DEFAULT '' NOT NULL,
-
-	KEY plugin (tt_content)
+	url varchar(2048) DEFAULT '' NOT NULL
 ) ENGINE=InnoDB;
