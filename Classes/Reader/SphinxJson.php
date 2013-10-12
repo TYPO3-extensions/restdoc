@@ -490,6 +490,19 @@ class Tx_Restdoc_Reader_SphinxJson {
 			$anchor = '';
 			if (preg_match('#^[a-zA-Z]+://#', $matches[2])) {
 				// External URL
+				// Hook for post-processing the external URL
+				if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['restdoc']['replaceLinksHook'])) {
+					foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['restdoc']['replaceLinksHook'] as $classRef) {
+						$hookObject = t3lib_div::getUserObj($classRef);
+						$params = array(
+							'matches' => &$matches,
+							'pObj' => $self,
+						);
+						if (is_callable(array($hookObject, 'processExternalUrl'))) {
+							$hookObject->processExternalUrl($params);
+						}
+					}
+				}
 				return $matches[0];
 			} elseif (t3lib_div::isFirstPartOfStr($matches[2], 'mailto:')) {
 				// Email address
